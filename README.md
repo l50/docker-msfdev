@@ -12,4 +12,6 @@ Containerized and automated deployment of a metasploit development environment a
 
 At this point, you should have everything that you need to begin developing metasploit modules.
 
-If there's something missing that you'd like to have in your development environment, you should be able to add it to either the ```Dockerfile``` or ```entrypoint/msfdev-entrypoint.sh```.
+```msfconsole``` is symlinked for the msfdev user.
+
+If there's something missing that you'd like to have in your development environment, you should be able to add it to either the ```Dockerfile``` or ```entrypoint/msfdev-entrypoint.sh``` -- the Dockerfile has a ```dev_pkgs``` variable which can be used to install additional packages that you want for development. I've chosen ```vim``` and ```tmux``` for the initial candidates.

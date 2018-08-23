@@ -49,8 +49,8 @@ setup_git_config(){
 install_and_configure_pgsql(){
     mkdir $HOME/.msf4
     sudo -kS update-rc.d postgresql enable &&
-    sudo -S service postgresql start &&
-    cat <<EOF> $HOME/pg-utf8.sql
+        sudo -S service postgresql start &&
+        cat <<EOF> $HOME/pg-utf8.sql
 update pg_database set datallowconn = TRUE where datname = 'template0';
 \c template0
 update pg_database set datistemplate = FALSE where datname = 'template1';
@@ -61,7 +61,7 @@ update pg_database set datistemplate = TRUE where datname = 'template1';
 update pg_database set datallowconn = FALSE where datname = 'template0';
 \q
 EOF
-    sudo -u postgres psql -f $HOME/pg-utf8.sql &&
+sudo -u postgres psql -f $HOME/pg-utf8.sql &&
     sudo -u postgres createuser msfdev -dRS &&
     sudo -u postgres psql -c "ALTER USER msfdev with ENCRYPTED PASSWORD '$POSTGRES_PW';" &&
     sudo -u postgres createdb --owner msfdev msf_dev_db &&
@@ -89,6 +89,9 @@ test:
 EOF
 }
 
+msfconsole_alias(){
+    echo 'alias msfconsole="pushd $HOME/metasploit-framework && ./msfconsole && popd"' >> ~/.bash_aliases
+}
 create_msfdev_user
 export -f setup_git_repo
 su msfdev -c 'bash -c setup_git_repo'
@@ -100,3 +103,5 @@ export -f setup_git_config
 su msfdev -c 'bash -c setup_git_config'
 export -f install_and_configure_pgsql
 su msfdev -c 'bash -c install_and_configure_pgsql'
+export -f msfconsole_alias
+su msfdev -c 'bash -c msfconsole_alias'
