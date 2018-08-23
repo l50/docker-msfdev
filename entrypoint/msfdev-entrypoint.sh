@@ -15,7 +15,7 @@ setup_git_repo(){
     pushd $HOME
     git clone $GIT_REPO
     cd metasploit-framework
-    git remote add upstream git://github.com/rapid7/metasploit-framework.git
+    git remote add upstream https://github.com/rapid7/metasploit-framework.git
     git fetch upstream
     git checkout -b upstream-master --track upstream/master
     popd
